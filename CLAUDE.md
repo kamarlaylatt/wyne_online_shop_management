@@ -61,10 +61,37 @@ Follow the existing pattern in `src/routes/admin.ts` or `src/routes/user.ts`:
 - Use `{ auth: true }` macro for protected endpoints
 - Mount new route modules in `src/index.ts`
 
+### Module Pattern
+
+Business logic lives in `src/modules/<entity>/` using a 3-file structure:
+
+```
+src/modules/<entity>/
+  service.ts   — static abstract class with Prisma calls
+  model.ts     — Elysia `t` validation schemas (body, params, query)
+  index.ts     — Elysia instance with prefix, wiring service + models
+```
+
+Mount the controller in `src/routes/admin.ts` with `.use(controller)` inside `adminRoutes` (after `.use(betterAuth)`) so the `auth` macro is available.
+
+### Current Admin Modules
+
+| Module | Prefix | Notes |
+|---|---|---|
+| suppliers | `/api/admin/suppliers` | includes `_count.purchaseItems` on list |
+| customers | `/api/admin/customers` | standard CRUD |
+| purchase-items | `/api/admin/purchase-items` | includes supplier name |
+| orders | `/api/admin/orders` | includes customer + orderItems; status/paymentStatus enums |
+| order-items | `/api/admin/order-items` | `GET /` requires `?orderId=` query param; cascade-deleted with order |
+
+### Prisma Singleton
+
+`lib/prisma.ts` exports a shared `prisma` instance using `PrismaPg` adapter. Import from here in all service files — do not create new `PrismaClient` instances per module.
+
 ### Database
 
 Prisma schema is in `prisma/schema.prisma`. The generated client outputs to `generated/prisma/`. Always run `bunx prisma generate` after schema changes.
 
 ### API Reference
 
-A Postman collection is available at `wyne-shop-api.postman_collection.json`.
+A Postman collection is available at `wyne-shop-api.postman_collection.json`. It includes folders for Auth, Suppliers, Customers, Purchase Items, Orders, and Order Items — all using `{{adminToken}}` for authorization.

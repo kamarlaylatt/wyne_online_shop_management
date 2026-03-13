@@ -1,0 +1,10 @@
+import { Elysia } from "elysia"
+import { PurchaseItemService } from "./service"
+import { PurchaseItemCreateBody, PurchaseItemUpdateBody, IdParams } from "./model"
+
+export const purchaseItemController = new Elysia({ prefix: "/api/admin/purchase-items" })
+    .get("/", () => PurchaseItemService.getAll(), { auth: true })
+    .get("/:id", ({ params }) => PurchaseItemService.getById(params.id), { auth: true, params: IdParams })
+    .post("/", ({ body }) => PurchaseItemService.create(body), { auth: true, body: PurchaseItemCreateBody })
+    .put("/:id", ({ params, body }) => PurchaseItemService.update(params.id, body), { auth: true, params: IdParams, body: PurchaseItemUpdateBody })
+    .delete("/:id", ({ params }) => PurchaseItemService.delete(params.id), { auth: true, params: IdParams })

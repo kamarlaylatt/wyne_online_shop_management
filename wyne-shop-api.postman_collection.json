@@ -372,6 +372,547 @@
               "body": "{\n  \"message\": \"Unauthorized\"\n}"
             }
           ]
+        },
+        {
+          "name": "Suppliers",
+          "item": [
+            {
+              "name": "List Suppliers",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/suppliers",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "suppliers"]
+                },
+                "description": "List all suppliers. Includes purchase item count."
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "body": "[\n  {\n    \"id\": \"clxxx1\",\n    \"name\": \"Supplier A\",\n    \"phone\": \"081234567890\",\n    \"email\": \"supplier@example.com\",\n    \"createdAt\": \"2026-01-01T00:00:00.000Z\",\n    \"updatedAt\": \"2026-01-01T00:00:00.000Z\",\n    \"_count\": { \"purchaseItems\": 3 }\n  }\n]"
+                }
+              ]
+            },
+            {
+              "name": "Get Supplier",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/suppliers/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "suppliers", ":id"],
+                  "variable": [{ "key": "id", "value": "<supplier_id>" }]
+                },
+                "description": "Get a single supplier by ID."
+              },
+              "response": []
+            },
+            {
+              "name": "Create Supplier",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Supplier A\",\n  \"phone\": \"081234567890\",\n  \"email\": \"supplier@example.com\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/suppliers",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "suppliers"]
+                },
+                "description": "Create a new supplier. `name` is required; `phone` and `email` are optional."
+              },
+              "response": []
+            },
+            {
+              "name": "Update Supplier",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Updated Supplier\",\n  \"phone\": \"089999999999\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/suppliers/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "suppliers", ":id"],
+                  "variable": [{ "key": "id", "value": "<supplier_id>" }]
+                },
+                "description": "Update a supplier. All fields are optional."
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Supplier",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/suppliers/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "suppliers", ":id"],
+                  "variable": [{ "key": "id", "value": "<supplier_id>" }]
+                },
+                "description": "Delete a supplier by ID."
+              },
+              "response": []
+            }
+          ],
+          "description": "CRUD endpoints for suppliers."
+        },
+        {
+          "name": "Customers",
+          "item": [
+            {
+              "name": "List Customers",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/customers",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "customers"]
+                },
+                "description": "List all customers."
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "body": "[\n  {\n    \"id\": \"clxxx2\",\n    \"name\": \"John Doe\",\n    \"phone\": \"081234567890\",\n    \"address\": \"123 Main St\",\n    \"createdAt\": \"2026-01-01T00:00:00.000Z\",\n    \"updatedAt\": \"2026-01-01T00:00:00.000Z\"\n  }\n]"
+                }
+              ]
+            },
+            {
+              "name": "Get Customer",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/customers/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "customers", ":id"],
+                  "variable": [{ "key": "id", "value": "<customer_id>" }]
+                },
+                "description": "Get a single customer by ID."
+              },
+              "response": []
+            },
+            {
+              "name": "Create Customer",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"John Doe\",\n  \"phone\": \"081234567890\",\n  \"address\": \"123 Main St\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/customers",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "customers"]
+                },
+                "description": "Create a new customer. `name` is required; `phone` and `address` are optional."
+              },
+              "response": []
+            },
+            {
+              "name": "Update Customer",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Jane Doe\",\n  \"address\": \"456 New St\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/customers/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "customers", ":id"],
+                  "variable": [{ "key": "id", "value": "<customer_id>" }]
+                },
+                "description": "Update a customer. All fields are optional."
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Customer",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/customers/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "customers", ":id"],
+                  "variable": [{ "key": "id", "value": "<customer_id>" }]
+                },
+                "description": "Delete a customer by ID."
+              },
+              "response": []
+            }
+          ],
+          "description": "CRUD endpoints for customers."
+        },
+        {
+          "name": "Purchase Items",
+          "item": [
+            {
+              "name": "List Purchase Items",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/purchase-items",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "purchase-items"]
+                },
+                "description": "List all purchase items. Includes supplier name."
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "body": "[\n  {\n    \"id\": \"clxxx3\",\n    \"name\": \"Item A\",\n    \"totalPrice\": \"50000\",\n    \"quantity\": 100,\n    \"supplierId\": \"clxxx1\",\n    \"supplier\": { \"id\": \"clxxx1\", \"name\": \"Supplier A\" },\n    \"createdAt\": \"2026-01-01T00:00:00.000Z\",\n    \"updatedAt\": \"2026-01-01T00:00:00.000Z\"\n  }\n]"
+                }
+              ]
+            },
+            {
+              "name": "Get Purchase Item",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/purchase-items/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "purchase-items", ":id"],
+                  "variable": [{ "key": "id", "value": "<purchase_item_id>" }]
+                },
+                "description": "Get a single purchase item by ID. Includes supplier info."
+              },
+              "response": []
+            },
+            {
+              "name": "Create Purchase Item",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Item A\",\n  \"totalPrice\": 50000,\n  \"quantity\": 100,\n  \"supplierId\": \"<supplier_id>\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/purchase-items",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "purchase-items"]
+                },
+                "description": "Create a new purchase item. All fields are required."
+              },
+              "response": []
+            },
+            {
+              "name": "Update Purchase Item",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Updated Item\",\n  \"quantity\": 200\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/purchase-items/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "purchase-items", ":id"],
+                  "variable": [{ "key": "id", "value": "<purchase_item_id>" }]
+                },
+                "description": "Update a purchase item. All fields are optional."
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Purchase Item",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/purchase-items/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "purchase-items", ":id"],
+                  "variable": [{ "key": "id", "value": "<purchase_item_id>" }]
+                },
+                "description": "Delete a purchase item by ID."
+              },
+              "response": []
+            }
+          ],
+          "description": "CRUD endpoints for purchase items (stock bought from suppliers)."
+        },
+        {
+          "name": "Orders",
+          "item": [
+            {
+              "name": "List Orders",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/orders",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "orders"]
+                },
+                "description": "List all orders. Includes customer info and order items."
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "body": "[\n  {\n    \"id\": \"clxxx4\",\n    \"customerId\": \"clxxx2\",\n    \"customer\": { \"id\": \"clxxx2\", \"name\": \"John Doe\" },\n    \"totalPrice\": \"150000\",\n    \"status\": \"PENDING\",\n    \"paymentStatus\": \"UNPAID\",\n    \"createdAt\": \"2026-01-01T00:00:00.000Z\",\n    \"updatedAt\": \"2026-01-01T00:00:00.000Z\",\n    \"orderItems\": []\n  }\n]"
+                }
+              ]
+            },
+            {
+              "name": "Get Order",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/orders/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "orders", ":id"],
+                  "variable": [{ "key": "id", "value": "<order_id>" }]
+                },
+                "description": "Get a single order with full details: customer info and all order items."
+              },
+              "response": []
+            },
+            {
+              "name": "Create Order",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": \"<customer_id>\",\n  \"status\": \"PENDING\",\n  \"paymentStatus\": \"UNPAID\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/orders",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "orders"]
+                },
+                "description": "Create a new order. `customerId` is required. `status` (PENDING|PROCESSING|COMPLETED|CANCELLED) and `paymentStatus` (UNPAID|PAID|REFUNDED) default to PENDING/UNPAID."
+              },
+              "response": []
+            },
+            {
+              "name": "Update Order",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"status\": \"COMPLETED\",\n  \"paymentStatus\": \"PAID\"\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/orders/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "orders", ":id"],
+                  "variable": [{ "key": "id", "value": "<order_id>" }]
+                },
+                "description": "Update order status, payment status, or total price. All fields optional."
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Order",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/orders/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "orders", ":id"],
+                  "variable": [{ "key": "id", "value": "<order_id>" }]
+                },
+                "description": "Delete an order by ID. Cascades to all related order items."
+              },
+              "response": []
+            }
+          ],
+          "description": "CRUD endpoints for orders. Status values: PENDING | PROCESSING | COMPLETED | CANCELLED. Payment status: UNPAID | PAID | REFUNDED."
+        },
+        {
+          "name": "Order Items",
+          "item": [
+            {
+              "name": "List Order Items by Order",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/order-items?orderId=<order_id>",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "order-items"],
+                  "query": [{ "key": "orderId", "value": "<order_id>" }]
+                },
+                "description": "List all items for a specific order. `orderId` query param is required."
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "body": "[\n  {\n    \"id\": \"clxxx5\",\n    \"orderId\": \"clxxx4\",\n    \"purchaseItemId\": \"clxxx3\",\n    \"purchaseItem\": { \"id\": \"clxxx3\", \"name\": \"Item A\" },\n    \"quantity\": 2,\n    \"unitPrice\": \"25000\",\n    \"createdAt\": \"2026-01-01T00:00:00.000Z\",\n    \"updatedAt\": \"2026-01-01T00:00:00.000Z\"\n  }\n]"
+                }
+              ]
+            },
+            {
+              "name": "Get Order Item",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/order-items/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "order-items", ":id"],
+                  "variable": [{ "key": "id", "value": "<order_item_id>" }]
+                },
+                "description": "Get a single order item by ID."
+              },
+              "response": []
+            },
+            {
+              "name": "Create Order Item",
+              "request": {
+                "method": "POST",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderId\": \"<order_id>\",\n  \"purchaseItemId\": \"<purchase_item_id>\",\n  \"quantity\": 2,\n  \"unitPrice\": 25000\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/order-items",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "order-items"]
+                },
+                "description": "Add an item to an order. All fields are required."
+              },
+              "response": []
+            },
+            {
+              "name": "Update Order Item",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+                  { "key": "Content-Type", "value": "application/json" }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quantity\": 5,\n  \"unitPrice\": 20000\n}",
+                  "options": { "raw": { "language": "json" } }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/order-items/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "order-items", ":id"],
+                  "variable": [{ "key": "id", "value": "<order_item_id>" }]
+                },
+                "description": "Update quantity or unit price of an order item. Both fields are optional."
+              },
+              "response": []
+            },
+            {
+              "name": "Delete Order Item",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/order-items/:id",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "order-items", ":id"],
+                  "variable": [{ "key": "id", "value": "<order_item_id>" }]
+                },
+                "description": "Delete an order item by ID."
+              },
+              "response": []
+            }
+          ],
+          "description": "CRUD endpoints for order items. Always filter by orderId when listing."
         }
       ],
       "description": "Admin-specific routes. Admins have their own independent auth system with separate session storage."

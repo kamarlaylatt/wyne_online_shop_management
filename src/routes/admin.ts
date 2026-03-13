@@ -1,5 +1,10 @@
 import { Elysia, Context } from "elysia";
 import { auth as adminAuth } from "../../lib/auth/admin";
+import { supplierController } from "../modules/suppliers";
+import { customerController } from "../modules/customers";
+import { purchaseItemController } from "../modules/purchase-items";
+import { orderController } from "../modules/orders";
+import { orderItemController } from "../modules/order-items";
 
 // Auth middleware with macro
 const betterAuth = new Elysia({ name: 'better-auth' })
@@ -40,3 +45,8 @@ export const adminRoutes = new Elysia()
     .get("/api/admin/detail", ({ user }) => user, {
         auth: true
     })
+    .use(supplierController)
+    .use(customerController)
+    .use(purchaseItemController)
+    .use(orderController)
+    .use(orderItemController)
