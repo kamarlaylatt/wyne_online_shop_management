@@ -642,7 +642,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"Item A\",\n  \"totalPrice\": 50000,\n  \"quantity\": 100,\n  \"supplierId\": \"<supplier_id>\"\n}",
+                  "raw": "{\n  \"name\": \"Item A\",\n  \"totalPrice\": 50000,\n  \"quantity\": 100,\n  \"supplierId\": \"<supplier_id>\",\n  \"purchaseDate\": \"2026-03-14T00:00:00.000Z\"\n}",
                   "options": { "raw": { "language": "json" } }
                 },
                 "url": {
@@ -664,7 +664,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"name\": \"Updated Item\",\n  \"quantity\": 200\n}",
+                  "raw": "{\n  \"name\": \"Updated Item\",\n  \"quantity\": 200,\n  \"purchaseDate\": \"2026-03-14T00:00:00.000Z\"\n}",
                   "options": { "raw": { "language": "json" } }
                 },
                 "url": {
