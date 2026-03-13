@@ -40,3 +40,12 @@ yarn-error.log*
 **/*.log
 package-lock.json
 **/*.bun
+
+# env
+.env
+
+# prisma generated client
+/generated/prisma
+
+# compiled binary
+server

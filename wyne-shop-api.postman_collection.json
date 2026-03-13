@@ -1,0 +1,706 @@
+{
+  "info": {
+    "name": "Wyne Online Shop Management API",
+    "description": "API collection for Wyne Online Shop Management system. Includes Admin and User authentication endpoints, session management, and protected routes.\n\n## Setup\n1. Set the `baseUrl` variable to your server (default: `http://localhost:3000`)\n2. Use Sign In endpoints to get a session token\n3. Copy the `token` from sign-in response and set it as `adminToken` or `userToken` variable",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "adminToken",
+      "value": "",
+      "type": "string",
+      "description": "Admin session token from sign-in response"
+    },
+    {
+      "key": "userToken",
+      "value": "",
+      "type": "string",
+      "description": "User session token from sign-in response"
+    }
+  ],
+  "item": [
+    {
+      "name": "Root",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/",
+              "host": ["{{baseUrl}}"],
+              "path": [""]
+            },
+            "description": "Returns a welcome message to verify the server is running."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"message\": \"Welcome to Wyne Shop API\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Auth",
+          "item": [
+            {
+              "name": "Sign Up",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();",
+                      "if (res.token) {",
+                      "  pm.collectionVariables.set('adminToken', res.token);",
+                      "}"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Admin User\",\n  \"email\": \"admin@example.com\",\n  \"password\": \"password123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/auth/sign-up/email",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "auth", "sign-up", "email"]
+                },
+                "description": "Register a new admin account with email and password."
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "body": "{\n  \"token\": \"<session_token>\",\n  \"user\": {\n    \"id\": \"abc123\",\n    \"name\": \"Admin User\",\n    \"email\": \"admin@example.com\",\n    \"emailVerified\": false,\n    \"image\": null,\n    \"createdAt\": \"2026-01-01T00:00:00.000Z\",\n    \"updatedAt\": \"2026-01-01T00:00:00.000Z\"\n  }\n}"
+                }
+              ]
+            },
+            {
+              "name": "Sign In",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();",
+                      "if (res.token) {",
+                      "  pm.collectionVariables.set('adminToken', res.token);",
+                      "  console.log('Admin token saved:', res.token);",
+                      "}"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"password123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/auth/sign-in/email",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "auth", "sign-in", "email"]
+                },
+                "description": "Sign in with admin email and password. The test script automatically saves the token to the `adminToken` collection variable."
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "body": "{\n  \"token\": \"<session_token>\",\n  \"user\": {\n    \"id\": \"abc123\",\n    \"name\": \"Admin User\",\n    \"email\": \"admin@example.com\",\n    \"emailVerified\": false,\n    \"image\": null,\n    \"createdAt\": \"2026-01-01T00:00:00.000Z\",\n    \"updatedAt\": \"2026-01-01T00:00:00.000Z\"\n  }\n}"
+                },
+                {
+                  "name": "Invalid Credentials",
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "body": "{\n  \"message\": \"Invalid email or password\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Get Session",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/auth/get-session",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "auth", "get-session"]
+                },
+                "description": "Retrieve the current admin session. Requires a valid session token."
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "body": "{\n  \"session\": {\n    \"id\": \"sess_abc123\",\n    \"token\": \"<session_token>\",\n    \"expiresAt\": \"2026-02-01T00:00:00.000Z\",\n    \"ipAddress\": \"127.0.0.1\",\n    \"userAgent\": \"PostmanRuntime/7.x\"\n  },\n  \"user\": {\n    \"id\": \"abc123\",\n    \"name\": \"Admin User\",\n    \"email\": \"admin@example.com\",\n    \"emailVerified\": false,\n    \"image\": null,\n    \"createdAt\": \"2026-01-01T00:00:00.000Z\",\n    \"updatedAt\": \"2026-01-01T00:00:00.000Z\"\n  }\n}"
+                },
+                {
+                  "name": "No Session",
+                  "status": "OK",
+                  "code": 200,
+                  "body": "null"
+                }
+              ]
+            },
+            {
+              "name": "Sign Out",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{adminToken}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/auth/sign-out",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "auth", "sign-out"]
+                },
+                "description": "Sign out the current admin session. Invalidates the session token."
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "body": "{\n  \"success\": true\n}"
+                }
+              ]
+            },
+            {
+              "name": "Forgot Password",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"admin@example.com\",\n  \"redirectTo\": \"http://localhost:3001/reset-password\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/auth/forget-password",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "auth", "forget-password"]
+                },
+                "description": "Initiate the password reset flow for an admin. Sends a reset email if the address is registered."
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "body": "{\n  \"success\": true\n}"
+                }
+              ]
+            },
+            {
+              "name": "Reset Password",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<reset_token_from_email>\",\n  \"newPassword\": \"newpassword123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/auth/reset-password",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "auth", "reset-password"]
+                },
+                "description": "Reset admin password using the token received via email."
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "body": "{\n  \"success\": true\n}"
+                }
+              ]
+            },
+            {
+              "name": "Verify Email",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<verification_token_from_email>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/auth/verify-email",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "auth", "verify-email"]
+                },
+                "description": "Verify the admin's email address using the verification token."
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "body": "{\n  \"success\": true\n}"
+                }
+              ]
+            }
+          ],
+          "description": "Better-Auth powered authentication endpoints for admin users. Base path: `/api/admin/auth`"
+        },
+        {
+          "name": "Get Admin Detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminToken}}",
+                "description": "Session token from sign-in"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/admin/detail",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "admin", "detail"]
+            },
+            "description": "Get the authenticated admin's profile details. Requires a valid session token in the Authorization header."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": \"abc123\",\n  \"name\": \"Admin User\",\n  \"email\": \"admin@example.com\",\n  \"emailVerified\": false,\n  \"image\": null,\n  \"createdAt\": \"2026-01-01T00:00:00.000Z\",\n  \"updatedAt\": \"2026-01-01T00:00:00.000Z\"\n}"
+            },
+            {
+              "name": "Unauthorized",
+              "status": "Unauthorized",
+              "code": 401,
+              "body": "{\n  \"message\": \"Unauthorized\"\n}"
+            }
+          ]
+        }
+      ],
+      "description": "Admin-specific routes. Admins have their own independent auth system with separate session storage."
+    },
+    {
+      "name": "User",
+      "item": [
+        {
+          "name": "Auth",
+          "item": [
+            {
+              "name": "Sign Up",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();",
+                      "if (res.token) {",
+                      "  pm.collectionVariables.set('userToken', res.token);",
+                      "}"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/user/auth/sign-up/email",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "user", "auth", "sign-up", "email"]
+                },
+                "description": "Register a new user account with email and password."
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "body": "{\n  \"token\": \"<session_token>\",\n  \"user\": {\n    \"id\": \"usr_abc123\",\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"emailVerified\": false,\n    \"image\": null,\n    \"createdAt\": \"2026-01-01T00:00:00.000Z\",\n    \"updatedAt\": \"2026-01-01T00:00:00.000Z\"\n  }\n}"
+                }
+              ]
+            },
+            {
+              "name": "Sign In",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "const res = pm.response.json();",
+                      "if (res.token) {",
+                      "  pm.collectionVariables.set('userToken', res.token);",
+                      "  console.log('User token saved:', res.token);",
+                      "}"
+                    ],
+                    "type": "text/javascript"
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/user/auth/sign-in/email",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "user", "auth", "sign-in", "email"]
+                },
+                "description": "Sign in with user email and password. The test script automatically saves the token to the `userToken` collection variable."
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "body": "{\n  \"token\": \"<session_token>\",\n  \"user\": {\n    \"id\": \"usr_abc123\",\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"emailVerified\": false,\n    \"image\": null,\n    \"createdAt\": \"2026-01-01T00:00:00.000Z\",\n    \"updatedAt\": \"2026-01-01T00:00:00.000Z\"\n  }\n}"
+                },
+                {
+                  "name": "Invalid Credentials",
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "body": "{\n  \"message\": \"Invalid email or password\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Get Session",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{userToken}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/user/auth/get-session",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "user", "auth", "get-session"]
+                },
+                "description": "Retrieve the current user session. Requires a valid session token."
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "body": "{\n  \"session\": {\n    \"id\": \"sess_abc123\",\n    \"token\": \"<session_token>\",\n    \"expiresAt\": \"2026-02-01T00:00:00.000Z\",\n    \"ipAddress\": \"127.0.0.1\",\n    \"userAgent\": \"PostmanRuntime/7.x\"\n  },\n  \"user\": {\n    \"id\": \"usr_abc123\",\n    \"name\": \"John Doe\",\n    \"email\": \"john@example.com\",\n    \"emailVerified\": false,\n    \"image\": null,\n    \"createdAt\": \"2026-01-01T00:00:00.000Z\",\n    \"updatedAt\": \"2026-01-01T00:00:00.000Z\"\n  }\n}"
+                },
+                {
+                  "name": "No Session",
+                  "status": "OK",
+                  "code": 200,
+                  "body": "null"
+                }
+              ]
+            },
+            {
+              "name": "Sign Out",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{userToken}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/user/auth/sign-out",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "user", "auth", "sign-out"]
+                },
+                "description": "Sign out the current user session. Invalidates the session token."
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "body": "{\n  \"success\": true\n}"
+                }
+              ]
+            },
+            {
+              "name": "Forgot Password",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"john@example.com\",\n  \"redirectTo\": \"http://localhost:3001/reset-password\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/user/auth/forget-password",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "user", "auth", "forget-password"]
+                },
+                "description": "Initiate the password reset flow for a user. Sends a reset email if the address is registered."
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "body": "{\n  \"success\": true\n}"
+                }
+              ]
+            },
+            {
+              "name": "Reset Password",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<reset_token_from_email>\",\n  \"newPassword\": \"newpassword123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/user/auth/reset-password",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "user", "auth", "reset-password"]
+                },
+                "description": "Reset user password using the token received via email."
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "body": "{\n  \"success\": true\n}"
+                }
+              ]
+            },
+            {
+              "name": "Verify Email",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"<verification_token_from_email>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/user/auth/verify-email",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "user", "auth", "verify-email"]
+                },
+                "description": "Verify the user's email address using the verification token."
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "body": "{\n  \"success\": true\n}"
+                }
+              ]
+            }
+          ],
+          "description": "Better-Auth powered authentication endpoints for regular users. Base path: `/api/user/auth`"
+        },
+        {
+          "name": "Get User Detail",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{userToken}}",
+                "description": "Session token from sign-in"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/user/detail",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "user", "detail"]
+            },
+            "description": "Get the authenticated user's profile details. Requires a valid session token in the Authorization header."
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "body": "{\n  \"id\": \"usr_abc123\",\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"emailVerified\": false,\n  \"image\": null,\n  \"createdAt\": \"2026-01-01T00:00:00.000Z\",\n  \"updatedAt\": \"2026-01-01T00:00:00.000Z\"\n}"
+            },
+            {
+              "name": "Unauthorized",
+              "status": "Unauthorized",
+              "code": 401,
+              "body": "{\n  \"message\": \"Unauthorized\"\n}"
+            }
+          ]
+        }
+      ],
+      "description": "Regular user routes. Users have their own independent auth system with separate session storage from admins."
+    }
+  ]
+}
