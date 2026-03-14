@@ -22,11 +22,11 @@ export abstract class PurchaseItemService {
         })
     }
 
-    static async create(data: { name: string; totalPrice: number; quantity: number; supplierId: string; purchaseDate: Date }) {
+    static async create(data: { name: string; totalPrice: number; quantity: number; supplierId: string; purchaseDate: Date; sellPerPrice?: number }) {
         return prisma.purchaseItem.create({ data })
     }
 
-    static async update(id: string, data: { name?: string; totalPrice?: number; quantity?: number; supplierId?: string; purchaseDate?: Date }) {
+    static async update(id: string, data: { name?: string; totalPrice?: number; quantity?: number; supplierId?: string; purchaseDate?: Date; sellPerPrice?: number }) {
         return prisma.purchaseItem.update({ where: { id }, data })
     }
 

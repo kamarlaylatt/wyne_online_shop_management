@@ -126,6 +126,7 @@ export abstract class OrderService {
                     name: true,
                     totalPrice: true,
                     quantity: true,
+                    sellPerPrice: true,
                     supplier: { select: { id: true, name: true } },
                 },
                 orderBy: { createdAt: "desc" },

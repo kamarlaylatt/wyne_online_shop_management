@@ -6,6 +6,7 @@ export const PurchaseItemCreateBody = t.Object({
     quantity: t.Integer(),
     supplierId: t.String(),
     purchaseDate: t.String({ format: "date-time" }),
+    sellPerPrice: t.Optional(t.Number()),
 })
 
 export const PurchaseItemUpdateBody = t.Object({
@@ -14,6 +15,7 @@ export const PurchaseItemUpdateBody = t.Object({
     quantity: t.Optional(t.Integer()),
     supplierId: t.Optional(t.String()),
     purchaseDate: t.Optional(t.String({ format: "date-time" })),
+    sellPerPrice: t.Optional(t.Number()),
 })
 
 export const IdParams = t.Object({ id: t.String() })

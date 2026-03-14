@@ -474,6 +474,7 @@ GET /api/admin/purchase-items?page=1&limit=20
       "quantity": 100,
       "supplierId": "cm9sup001",
       "purchaseDate": "2026-03-10T00:00:00.000Z",
+      "sellPerPrice": "2500",
       "createdAt": "2026-03-10T08:00:00.000Z",
       "updatedAt": "2026-03-10T08:00:00.000Z",
       "supplier": {
@@ -488,6 +489,7 @@ GET /api/admin/purchase-items?page=1&limit=20
       "quantity": 50,
       "supplierId": "cm9sup002",
       "purchaseDate": "2026-03-12T00:00:00.000Z",
+      "sellPerPrice": null,
       "createdAt": "2026-03-12T09:00:00.000Z",
       "updatedAt": "2026-03-12T09:00:00.000Z",
       "supplier": {
@@ -520,6 +522,7 @@ GET /api/admin/purchase-items/:id
   "quantity": 100,
   "supplierId": "cm9sup001",
   "purchaseDate": "2026-03-10T00:00:00.000Z",
+  "sellPerPrice": "2500",
   "createdAt": "2026-03-10T08:00:00.000Z",
   "updatedAt": "2026-03-10T08:00:00.000Z",
   "supplier": {
@@ -544,9 +547,12 @@ POST /api/admin/purchase-items
   "totalPrice": 250000,
   "quantity": 100,
   "supplierId": "cm9sup001",
-  "purchaseDate": "2026-03-10T00:00:00.000Z"
+  "purchaseDate": "2026-03-10T00:00:00.000Z",
+  "sellPerPrice": 2500
 }
 ```
+
+> `sellPerPrice` is optional.
 
 **Response** `200 OK`
 ```json
@@ -557,6 +563,7 @@ POST /api/admin/purchase-items
   "quantity": 100,
   "supplierId": "cm9sup001",
   "purchaseDate": "2026-03-10T00:00:00.000Z",
+  "sellPerPrice": "2500",
   "createdAt": "2026-03-14T08:00:00.000Z",
   "updatedAt": "2026-03-14T08:00:00.000Z"
 }
@@ -574,7 +581,8 @@ PUT /api/admin/purchase-items/:id
 ```json
 {
   "quantity": 120,
-  "totalPrice": 280000
+  "totalPrice": 280000,
+  "sellPerPrice": 2800
 }
 ```
 
@@ -587,6 +595,7 @@ PUT /api/admin/purchase-items/:id
   "quantity": 120,
   "supplierId": "cm9sup001",
   "purchaseDate": "2026-03-10T00:00:00.000Z",
+  "sellPerPrice": "2800",
   "createdAt": "2026-03-10T08:00:00.000Z",
   "updatedAt": "2026-03-14T10:00:00.000Z"
 }
@@ -609,6 +618,7 @@ DELETE /api/admin/purchase-items/:id
   "quantity": 120,
   "supplierId": "cm9sup001",
   "purchaseDate": "2026-03-10T00:00:00.000Z",
+  "sellPerPrice": "2800",
   "createdAt": "2026-03-10T08:00:00.000Z",
   "updatedAt": "2026-03-14T10:00:00.000Z"
 }
@@ -736,6 +746,7 @@ Returns all data needed to populate the order creation screen (purchase items an
       "name": "Beras Premium 5kg",
       "totalPrice": "250000",
       "quantity": 100,
+      "sellPerPrice": "2500",
       "supplier": {
         "id": "cm9sup001",
         "name": "PT Sumber Makmur"
