@@ -5,7 +5,10 @@ export abstract class PurchaseItemService {
         const skip = (page - 1) * limit
         const [data, total] = await Promise.all([
             prisma.purchaseItem.findMany({
-                include: { supplier: { select: { id: true, name: true } } },
+                include: {
+                    supplier: { select: { id: true, name: true } },
+                    _count: { select: { orderItems: true } },
+                },
                 orderBy: { createdAt: "desc" },
                 skip,
                 take: limit,
@@ -18,7 +21,10 @@ export abstract class PurchaseItemService {
     static async getById(id: string) {
         return prisma.purchaseItem.findUnique({
             where: { id },
-            include: { supplier: { select: { id: true, name: true } } }
+            include: {
+                supplier: { select: { id: true, name: true } },
+                _count: { select: { orderItems: true } },
+            }
         })
     }
 

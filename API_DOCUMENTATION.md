@@ -480,6 +480,9 @@ GET /api/admin/purchase-items?page=1&limit=20
       "supplier": {
         "id": "cm9sup001",
         "name": "PT Sumber Makmur"
+      },
+      "_count": {
+        "orderItems": 5
       }
     },
     {
@@ -495,6 +498,9 @@ GET /api/admin/purchase-items?page=1&limit=20
       "supplier": {
         "id": "cm9sup002",
         "name": "CV Berkah Jaya"
+      },
+      "_count": {
+        "orderItems": 3
       }
     }
   ],
@@ -528,6 +534,9 @@ GET /api/admin/purchase-items/:id
   "supplier": {
     "id": "cm9sup001",
     "name": "PT Sumber Makmur"
+  },
+  "_count": {
+    "orderItems": 5
   }
 }
 ```
@@ -750,6 +759,9 @@ Returns all data needed to populate the order creation screen (purchase items an
       "supplier": {
         "id": "cm9sup001",
         "name": "PT Sumber Makmur"
+      },
+      "_count": {
+        "orderItems": 5
       }
     }
   ],

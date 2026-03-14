@@ -128,6 +128,7 @@ export abstract class OrderService {
                     quantity: true,
                     sellPerPrice: true,
                     supplier: { select: { id: true, name: true } },
+                    _count: { select: { orderItems: true } },
                 },
                 orderBy: { createdAt: "desc" },
             }),
