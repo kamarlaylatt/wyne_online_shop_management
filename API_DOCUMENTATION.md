@@ -16,6 +16,7 @@
   - [Customers](#customers)
   - [Purchase Items](#purchase-items)
   - [Orders](#orders)
+    - [Preload Order Form Data](#preload-order-form-data)
   - [Order Items](#order-items)
 - [User Endpoints](#user-endpoints)
 - [Enums](#enums)
@@ -692,33 +693,125 @@ GET /api/admin/orders/:id
 
 ---
 
+#### Preload Order Form Data
+
+```
+GET /api/admin/orders/preload
+```
+
+Returns all data needed to populate the order creation screen (purchase items and customers).
+
+**Response** `200 OK`
+```json
+{
+  "purchaseItems": [
+    {
+      "id": "cm9pi001",
+      "name": "Beras Premium 5kg",
+      "totalPrice": "250000",
+      "quantity": 100,
+      "supplier": {
+        "id": "cm9sup001",
+        "name": "PT Sumber Makmur"
+      }
+    }
+  ],
+  "customers": [
+    {
+      "id": "cm9cust001",
+      "name": "Budi Santoso",
+      "phone": "+6281234567890",
+      "address": "Jl. Merdeka No. 10, Jakarta"
+    }
+  ]
+}
+```
+
+---
+
 #### Create Order
 
 ```
 POST /api/admin/orders
 ```
 
-**Request**
+Creates an order along with its order items in a single request. A new customer can be created inline, or an existing customer can be referenced by ID.
+
+**Request — with new customer**
 ```json
 {
-  "customerId": "cm9cust001",
+  "customer": {
+    "name": "Budi Santoso",
+    "phone": "+6281234567890",
+    "address": "Jl. Merdeka No. 10, Jakarta"
+  },
+  "items": [
+    { "purchaseItemId": "cm9pi001", "quantity": 2, "unitPrice": 15000 },
+    { "purchaseItemId": "cm9pi002", "quantity": 1, "unitPrice": 16000 }
+  ],
   "status": "PENDING",
   "paymentStatus": "UNPAID"
 }
 ```
 
-> `status` defaults to `PENDING`. `paymentStatus` defaults to `UNPAID`. Both are optional.
+**Request — with existing customer**
+```json
+{
+  "customerId": "cm9cust001",
+  "items": [
+    { "purchaseItemId": "cm9pi001", "quantity": 2, "unitPrice": 15000 }
+  ],
+  "status": "PENDING",
+  "paymentStatus": "UNPAID"
+}
+```
+
+> Either `customer` (object) or `customerId` (string) must be provided — not both, not neither. `items` is required and must contain at least one entry. `totalPrice` is automatically calculated as the sum of `quantity × unitPrice` across all items. `status` and `paymentStatus` are optional.
 
 **Response** `200 OK`
 ```json
 {
   "id": "cm9ord001",
   "customerId": "cm9cust001",
-  "totalPrice": "0",
+  "totalPrice": "46000",
   "status": "PENDING",
   "paymentStatus": "UNPAID",
   "createdAt": "2026-03-14T08:00:00.000Z",
-  "updatedAt": "2026-03-14T08:00:00.000Z"
+  "updatedAt": "2026-03-14T08:00:00.000Z",
+  "customer": {
+    "id": "cm9cust001",
+    "name": "Budi Santoso",
+    "phone": "+6281234567890",
+    "address": "Jl. Merdeka No. 10, Jakarta"
+  },
+  "orderItems": [
+    {
+      "id": "cm9oi001",
+      "orderId": "cm9ord001",
+      "purchaseItemId": "cm9pi001",
+      "quantity": 2,
+      "unitPrice": "15000",
+      "createdAt": "2026-03-14T08:00:00.000Z",
+      "updatedAt": "2026-03-14T08:00:00.000Z",
+      "purchaseItem": {
+        "id": "cm9pi001",
+        "name": "Beras Premium 5kg"
+      }
+    },
+    {
+      "id": "cm9oi002",
+      "orderId": "cm9ord001",
+      "purchaseItemId": "cm9pi002",
+      "quantity": 1,
+      "unitPrice": "16000",
+      "createdAt": "2026-03-14T08:00:00.000Z",
+      "updatedAt": "2026-03-14T08:00:00.000Z",
+      "purchaseItem": {
+        "id": "cm9pi002",
+        "name": "Minyak Goreng 2L"
+      }
+    }
+  ]
 }
 ```
 

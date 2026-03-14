@@ -13,8 +13,22 @@ const PaymentStatusEnum = t.Union([
     t.Literal("REFUNDED"),
 ])
 
+const CustomerInlineSchema = t.Object({
+    name: t.String(),
+    phone: t.Optional(t.String()),
+    address: t.Optional(t.String()),
+})
+
+const OrderItemInlineSchema = t.Object({
+    purchaseItemId: t.String(),
+    quantity: t.Number(),
+    unitPrice: t.Number(),
+})
+
 export const OrderCreateBody = t.Object({
-    customerId: t.String(),
+    customerId: t.Optional(t.String()),
+    customer: t.Optional(CustomerInlineSchema),
+    items: t.Array(OrderItemInlineSchema, { minItems: 1 }),
     status: t.Optional(OrderStatusEnum),
     paymentStatus: t.Optional(PaymentStatusEnum),
 })
