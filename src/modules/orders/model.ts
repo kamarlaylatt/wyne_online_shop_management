@@ -37,6 +37,7 @@ export const OrderUpdateBody = t.Object({
     status: t.Optional(OrderStatusEnum),
     paymentStatus: t.Optional(PaymentStatusEnum),
     totalPrice: t.Optional(t.Number()),
+    items: t.Optional(t.Array(OrderItemInlineSchema, { minItems: 1 })),
 })
 
 export const IdParams = t.Object({ id: t.String() })

@@ -66,8 +66,45 @@ export abstract class OrderService {
         })
     }
 
-    static async update(id: string, data: { status?: OrderStatus; paymentStatus?: PaymentStatus; totalPrice?: number }) {
-        return prisma.order.update({ where: { id }, data })
+    static async update(id: string, data: {
+        status?: OrderStatus
+        paymentStatus?: PaymentStatus
+        totalPrice?: number
+        items?: OrderItemInput[]
+    }) {
+        if (data.items) {
+            const totalPrice = data.totalPrice
+                ?? data.items.reduce((sum, item) => sum + item.quantity * item.unitPrice, 0)
+
+            return prisma.$transaction(async (tx) => {
+                await tx.orderItem.deleteMany({ where: { orderId: id } })
+                return tx.order.update({
+                    where: { id },
+                    data: {
+                        status: data.status,
+                        paymentStatus: data.paymentStatus,
+                        totalPrice,
+                        orderItems: {
+                            create: data.items!.map((item) => ({
+                                purchaseItemId: item.purchaseItemId,
+                                quantity: item.quantity,
+                                unitPrice: item.unitPrice,
+                            })),
+                        },
+                    },
+                    include: {
+                        customer: { select: { id: true, name: true, phone: true, address: true } },
+                        orderItems: { include: { purchaseItem: { select: { id: true, name: true } } } },
+                    },
+                })
+            })
+        }
+
+        return prisma.order.update({ where: { id }, data: {
+            status: data.status,
+            paymentStatus: data.paymentStatus,
+            totalPrice: data.totalPrice,
+        }})
     }
 
     static async delete(id: string) {

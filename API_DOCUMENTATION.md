@@ -823,12 +823,13 @@ Creates an order along with its order items in a single request. A new customer 
 PUT /api/admin/orders/:id
 ```
 
-**Request** (all fields optional)
+All fields are optional. When `items` is provided, all existing order items are replaced atomically and `totalPrice` is recalculated automatically (unless explicitly set).
+
+**Request — status/payment only**
 ```json
 {
   "status": "COMPLETED",
-  "paymentStatus": "PAID",
-  "totalPrice": 45000
+  "paymentStatus": "PAID"
 }
 ```
 
@@ -842,6 +843,65 @@ PUT /api/admin/orders/:id
   "paymentStatus": "PAID",
   "createdAt": "2026-03-14T08:00:00.000Z",
   "updatedAt": "2026-03-14T11:30:00.000Z"
+}
+```
+
+**Request — replace order items**
+```json
+{
+  "items": [
+    { "purchaseItemId": "cm9pi001", "quantity": 3, "unitPrice": 15000 },
+    { "purchaseItemId": "cm9pi002", "quantity": 2, "unitPrice": 16000 }
+  ]
+}
+```
+
+> `items` must contain at least one entry. `totalPrice` is recalculated as the sum of `quantity × unitPrice` unless `totalPrice` is also provided.
+
+**Response** `200 OK`
+```json
+{
+  "id": "cm9ord001",
+  "customerId": "cm9cust001",
+  "totalPrice": "77000",
+  "status": "COMPLETED",
+  "paymentStatus": "PAID",
+  "createdAt": "2026-03-14T08:00:00.000Z",
+  "updatedAt": "2026-03-14T11:30:00.000Z",
+  "customer": {
+    "id": "cm9cust001",
+    "name": "Budi Santoso",
+    "phone": "+6281234567890",
+    "address": "Jl. Sudirman No. 5, Jakarta"
+  },
+  "orderItems": [
+    {
+      "id": "cm9oi003",
+      "orderId": "cm9ord001",
+      "purchaseItemId": "cm9pi001",
+      "quantity": 3,
+      "unitPrice": "15000",
+      "createdAt": "2026-03-14T11:30:00.000Z",
+      "updatedAt": "2026-03-14T11:30:00.000Z",
+      "purchaseItem": {
+        "id": "cm9pi001",
+        "name": "Beras Premium 5kg"
+      }
+    },
+    {
+      "id": "cm9oi004",
+      "orderId": "cm9ord001",
+      "purchaseItemId": "cm9pi002",
+      "quantity": 2,
+      "unitPrice": "16000",
+      "createdAt": "2026-03-14T11:30:00.000Z",
+      "updatedAt": "2026-03-14T11:30:00.000Z",
+      "purchaseItem": {
+        "id": "cm9pi002",
+        "name": "Minyak Goreng 2L"
+      }
+    }
+  ]
 }
 ```
 
