@@ -453,41 +453,54 @@ DELETE /api/admin/customers/:id
 #### List Purchase Items
 
 ```
-GET /api/admin/purchase-items
+GET /api/admin/purchase-items?page=1&limit=20
 ```
+
+**Query Parameters**
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `page` | integer | 1 | Page number (minimum 1) |
+| `limit` | integer | 20 | Items per page (1-100) |
 
 **Response** `200 OK`
 ```json
-[
-  {
-    "id": "cm9pi001",
-    "name": "Beras Premium 5kg",
-    "totalPrice": "250000",
-    "quantity": 100,
-    "supplierId": "cm9sup001",
-    "purchaseDate": "2026-03-10T00:00:00.000Z",
-    "createdAt": "2026-03-10T08:00:00.000Z",
-    "updatedAt": "2026-03-10T08:00:00.000Z",
-    "supplier": {
-      "id": "cm9sup001",
-      "name": "PT Sumber Makmur"
+{
+  "data": [
+    {
+      "id": "cm9pi001",
+      "name": "Beras Premium 5kg",
+      "totalPrice": "250000",
+      "quantity": 100,
+      "supplierId": "cm9sup001",
+      "purchaseDate": "2026-03-10T00:00:00.000Z",
+      "createdAt": "2026-03-10T08:00:00.000Z",
+      "updatedAt": "2026-03-10T08:00:00.000Z",
+      "supplier": {
+        "id": "cm9sup001",
+        "name": "PT Sumber Makmur"
+      }
+    },
+    {
+      "id": "cm9pi002",
+      "name": "Minyak Goreng 2L",
+      "totalPrice": "320000",
+      "quantity": 50,
+      "supplierId": "cm9sup002",
+      "purchaseDate": "2026-03-12T00:00:00.000Z",
+      "createdAt": "2026-03-12T09:00:00.000Z",
+      "updatedAt": "2026-03-12T09:00:00.000Z",
+      "supplier": {
+        "id": "cm9sup002",
+        "name": "CV Berkah Jaya"
+      }
     }
-  },
-  {
-    "id": "cm9pi002",
-    "name": "Minyak Goreng 2L",
-    "totalPrice": "320000",
-    "quantity": 50,
-    "supplierId": "cm9sup002",
-    "purchaseDate": "2026-03-12T00:00:00.000Z",
-    "createdAt": "2026-03-12T09:00:00.000Z",
-    "updatedAt": "2026-03-12T09:00:00.000Z",
-    "supplier": {
-      "id": "cm9sup002",
-      "name": "CV Berkah Jaya"
-    }
-  }
-]
+  ],
+  "total": 42,
+  "page": 1,
+  "limit": 20,
+  "totalPages": 3
+}
 ```
 
 ---
@@ -610,43 +623,56 @@ DELETE /api/admin/purchase-items/:id
 #### List Orders
 
 ```
-GET /api/admin/orders
+GET /api/admin/orders?page=1&limit=20
 ```
+
+**Query Parameters**
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `page` | integer | 1 | Page number (minimum 1) |
+| `limit` | integer | 20 | Items per page (1-100) |
 
 **Response** `200 OK`
 ```json
-[
-  {
-    "id": "cm9ord001",
-    "customerId": "cm9cust001",
-    "totalPrice": "45000",
-    "status": "PROCESSING",
-    "paymentStatus": "PAID",
-    "createdAt": "2026-03-13T09:00:00.000Z",
-    "updatedAt": "2026-03-13T10:00:00.000Z",
-    "customer": {
-      "id": "cm9cust001",
-      "name": "Budi Santoso",
-      "phone": "+6281234567890",
-      "address": "Jl. Sudirman No. 5, Jakarta"
-    },
-    "orderItems": [
-      {
-        "id": "cm9oi001",
-        "orderId": "cm9ord001",
-        "purchaseItemId": "cm9pi001",
-        "quantity": 2,
-        "unitPrice": "15000",
-        "createdAt": "2026-03-13T09:00:00.000Z",
-        "updatedAt": "2026-03-13T09:00:00.000Z",
-        "purchaseItem": {
-          "id": "cm9pi001",
-          "name": "Beras Premium 5kg"
+{
+  "data": [
+    {
+      "id": "cm9ord001",
+      "customerId": "cm9cust001",
+      "totalPrice": "45000",
+      "status": "PROCESSING",
+      "paymentStatus": "PAID",
+      "createdAt": "2026-03-13T09:00:00.000Z",
+      "updatedAt": "2026-03-13T10:00:00.000Z",
+      "customer": {
+        "id": "cm9cust001",
+        "name": "Budi Santoso",
+        "phone": "+6281234567890",
+        "address": "Jl. Sudirman No. 5, Jakarta"
+      },
+      "orderItems": [
+        {
+          "id": "cm9oi001",
+          "orderId": "cm9ord001",
+          "purchaseItemId": "cm9pi001",
+          "quantity": 2,
+          "unitPrice": "15000",
+          "createdAt": "2026-03-13T09:00:00.000Z",
+          "updatedAt": "2026-03-13T09:00:00.000Z",
+          "purchaseItem": {
+            "id": "cm9pi001",
+            "name": "Beras Premium 5kg"
+          }
         }
-      }
-    ]
-  }
-]
+      ]
+    }
+  ],
+  "total": 156,
+  "page": 1,
+  "limit": 20,
+  "totalPages": 8
+}
 ```
 
 ---

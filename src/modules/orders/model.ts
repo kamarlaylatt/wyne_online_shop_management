@@ -41,3 +41,8 @@ export const OrderUpdateBody = t.Object({
 })
 
 export const IdParams = t.Object({ id: t.String() })
+
+export const PaginationQuery = t.Object({
+    page: t.Optional(t.Numeric({ minimum: 1, default: 1 })),
+    limit: t.Optional(t.Numeric({ minimum: 1, maximum: 100, default: 20 })),
+})

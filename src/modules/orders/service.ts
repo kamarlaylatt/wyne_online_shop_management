@@ -5,14 +5,21 @@ type OrderItemInput = { purchaseItemId: string; quantity: number; unitPrice: num
 type CustomerInput = { name: string; phone?: string; address?: string }
 
 export abstract class OrderService {
-    static async getAll() {
-        return prisma.order.findMany({
-            include: {
-                customer: { select: { id: true, name: true } },
-                orderItems: { include: { purchaseItem: { select: { id: true, name: true } } } }
-            },
-            orderBy: { createdAt: "desc" }
-        })
+    static async getAll(page = 1, limit = 20) {
+        const skip = (page - 1) * limit
+        const [data, total] = await Promise.all([
+            prisma.order.findMany({
+                include: {
+                    customer: { select: { id: true, name: true } },
+                    orderItems: { include: { purchaseItem: { select: { id: true, name: true } } } }
+                },
+                orderBy: { createdAt: "desc" },
+                skip,
+                take: limit,
+            }),
+            prisma.order.count(),
+        ])
+        return { data, total, page, limit, totalPages: Math.ceil(total / limit) }
     }
 
     static async getById(id: string) {

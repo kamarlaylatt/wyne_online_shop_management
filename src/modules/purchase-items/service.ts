@@ -1,11 +1,18 @@
 import { prisma } from "../../../lib/prisma"
 
 export abstract class PurchaseItemService {
-    static async getAll() {
-        return prisma.purchaseItem.findMany({
-            include: { supplier: { select: { id: true, name: true } } },
-            orderBy: { createdAt: "desc" }
-        })
+    static async getAll(page = 1, limit = 20) {
+        const skip = (page - 1) * limit
+        const [data, total] = await Promise.all([
+            prisma.purchaseItem.findMany({
+                include: { supplier: { select: { id: true, name: true } } },
+                orderBy: { createdAt: "desc" },
+                skip,
+                take: limit,
+            }),
+            prisma.purchaseItem.count(),
+        ])
+        return { data, total, page, limit, totalPages: Math.ceil(total / limit) }
     }
 
     static async getById(id: string) {
