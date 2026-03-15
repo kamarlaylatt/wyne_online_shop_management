@@ -1,6 +1,5 @@
 {
   "name": "wyne_online_shop_management",
-  "type": "module",
   "version": "1.0.50",
   "scripts": {
     "dev": "bun run --watch src/index.ts",
