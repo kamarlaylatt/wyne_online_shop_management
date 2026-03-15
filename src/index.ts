@@ -12,11 +12,13 @@ const app = new Elysia()
         allowedHeaders: ['Content-Type', 'Authorization']
     }))
     .use(adminRoutes)
-    .use(userRoutes)
-    .listen({ port: process.env.PORT ?? 3000, hostname: "0.0.0.0" });
+    .use(userRoutes);
 
-console.log(
-  `🦊 Wyne Shop is running at ${app.server?.hostname}:${app.server?.port}`
-);
+if (!process.env.VERCEL) {
+    app.listen({ port: process.env.PORT ?? 3000, hostname: "0.0.0.0" });
+    console.log(
+        `🦊 Wyne Shop is running at ${app.server?.hostname}:${app.server?.port}`
+    );
+}
 
 export default app;
