@@ -4,8 +4,8 @@
   "version": "1.0.50",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-   	"build": "tsc src/index.ts --outDir dist",
-		"start": "NODE_ENV=production node dist/index.js",
+    "build": "tsup src/index.ts --format esm --out-dir dist",
+    "start": "NODE_ENV=production node dist/index.js",
     "create-admin": "node scripts/create-admin.ts",
     "create-user": "node scripts/create-user.ts"
   },
@@ -25,6 +25,7 @@
     "@types/pg": "^8.16.0",
     "bun-types": "latest",
     "prisma": "^7.5.0",
+    "tsup": "^8.5.1",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },
