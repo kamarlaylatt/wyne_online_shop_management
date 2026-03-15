@@ -1,8 +1,10 @@
 import { Elysia } from "elysia"
+import { adminAuthMacro } from "../../macros/admin-auth"
 import { OrderService } from "./service"
 import { OrderCreateBody, OrderUpdateBody, IdParams, PaginationQuery } from "./model"
 
 export const orderController = new Elysia({ prefix: "/api/admin/orders" })
+    .use(adminAuthMacro)
     .get("/", ({ query }) => OrderService.getAll(query.page, query.limit), { auth: true, query: PaginationQuery })
     .get("/preload", () => OrderService.preload(), { auth: true })
     .get("/:id", ({ params }) => OrderService.getById(params.id), { auth: true, params: IdParams })

@@ -1,8 +1,10 @@
 import { Elysia } from "elysia"
+import { adminAuthMacro } from "../../macros/admin-auth"
 import { OrderItemService } from "./service"
 import { OrderItemCreateBody, OrderItemUpdateBody, IdParams, OrderIdQuery } from "./model"
 
 export const orderItemController = new Elysia({ prefix: "/api/admin/order-items" })
+    .use(adminAuthMacro)
     .get("/", ({ query }) => OrderItemService.getByOrderId(query.orderId), { auth: true, query: OrderIdQuery })
     .get("/:id", ({ params }) => OrderItemService.getById(params.id), { auth: true, params: IdParams })
     .post("/", ({ body }) => OrderItemService.create(body), { auth: true, body: OrderItemCreateBody })
