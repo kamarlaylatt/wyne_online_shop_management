@@ -1,5 +1,5 @@
 import { prisma } from "../../../lib/prisma"
-import { OrderStatus, PaymentStatus } from "../../../../generated/prisma/client"
+import { OrderStatus, PaymentStatus } from "../../../generated/prisma/client"
 
 type OrderItemInput = { purchaseItemId: string; quantity: number; unitPrice: number }
 type CustomerInput = { name: string; phone?: string; address?: string }
