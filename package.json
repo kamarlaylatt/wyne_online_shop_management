@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "tsx watch src/index.ts",
    	"build": "tsc src/index.ts --outDir dist",
-		"start": "NODE_ENV=production node dist/index.js",
+		"start": "npx prisma migrate deploy && NODE_ENV=production node dist/index.js",
     "create-admin": "node scripts/create-admin.ts",
     "create-user": "node scripts/create-user.ts"
   },
