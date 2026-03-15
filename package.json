@@ -1,27 +1,32 @@
 {
   "name": "wyne_online_shop_management",
+  "type": "module",
   "version": "1.0.50",
   "scripts": {
-    "dev": "bun run --watch src/index.ts",
-    "build": "bun build src/index.ts --outdir dist --target bun",
-    "start": "bun dist/index.js",
-    "create-admin": "bun run scripts/create-admin.ts",
-    "create-user": "bun run scripts/create-user.ts"
+    "dev": "tsx watch src/index.ts",
+   	"build": "tsc src/index.ts --outDir dist",
+		"start": "NODE_ENV=production node dist/index.js",
+    "create-admin": "node scripts/create-admin.ts",
+    "create-user": "node scripts/create-user.ts"
   },
   "dependencies": {
     "@better-auth/expo": "^1.5.5",
     "@elysiajs/cors": "^1.4.1",
+    "@elysiajs/node": "^1.4.5",
     "@prisma/adapter-pg": "^7.4.0",
     "@prisma/client": "^7.4.0",
     "better-auth": "^1.4.18",
     "dotenv": "^17.3.1",
-    "elysia": "latest",
+    "elysia": "^1.4.27",
     "pg": "^8.18.0"
   },
   "devDependencies": {
+    "@types/node": "^25.5.0",
     "@types/pg": "^8.16.0",
     "bun-types": "latest",
-    "prisma": "^7.5.0"
+    "prisma": "^7.5.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
   },
   "module": "src/index.js"
 }

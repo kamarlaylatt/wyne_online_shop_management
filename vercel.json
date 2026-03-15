@@ -1,6 +1,4 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "bunVersion": "1.x",
-  "buildCommand": "bunx prisma generate && bunx prisma migrate deploy",
+  "buildCommand": "npx prisma generate && npx prisma migrate deploy",
   "crons": []
 }

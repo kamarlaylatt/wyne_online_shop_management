@@ -2,8 +2,9 @@ import { Elysia } from "elysia";
 import { cors } from "@elysiajs/cors";
 import { adminRoutes } from "./routes/admin";
 import { userRoutes } from "./routes/user";
+import { node } from '@elysiajs/node'
 
-const app = new Elysia()
+const app = new Elysia({ adapter: node() })
     .get("/", () => ({ message: "Welcome to Wyne Shop API" }))
     .use(cors({
         origin: process.env.TRUSTED_ORIGINS ?? 'http://localhost:3001',
