@@ -1,5 +1,6 @@
 {
-  "buildCommand": "bunx prisma generate && bunx prisma migrate deploy && bun run build",
-  "outputDirectory": "dist",
+  "buildCommand": "bunx prisma generate && bunx prisma migrate deploy",
+  "bunVersion": "1.x",
+  "rewrites": [{ "source": "/(.*)", "destination": "/src/index" }],
   "crons": []
 }

@@ -18,3 +18,5 @@ const app = new Elysia()
 console.log(
   `🦊 Wyne Shop is running at ${app.server?.hostname}:${app.server?.port}`
 );
+
+export default app;
