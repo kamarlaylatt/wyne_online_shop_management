@@ -1,5 +1,4 @@
 {
   "buildCommand": "bunx prisma generate && bunx prisma migrate deploy",
-  "bunVersion": "1.x",
   "crons": []
 }
