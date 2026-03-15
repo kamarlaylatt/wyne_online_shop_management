@@ -30,4 +30,4 @@ export const adminRoutes = new Elysia()
     .use(customerController)
     .use(purchaseItemController)
     .use(orderController)
-    .use(orderItemController)
+    .use(orderItemController);
