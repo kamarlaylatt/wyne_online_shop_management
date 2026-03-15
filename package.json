@@ -3,7 +3,7 @@
   "version": "1.0.50",
   "scripts": {
     "dev": "bun run --watch src/index.ts",
-    "build": "bun build src/index.ts --outdir dist --target bun",
+    "build": "bunx prisma generate && npx prisma migrate deploy && bun build src/index.ts --outdir dist --target bun",
     "start": "bun dist/index.js",
     "create-admin": "bun run scripts/create-admin.ts",
     "create-user": "bun run scripts/create-user.ts"
