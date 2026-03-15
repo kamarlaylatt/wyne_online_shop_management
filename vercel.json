@@ -1,0 +1,9 @@
+{
+  "buildCommand": "bunx prisma migrate deploy && bun run build",
+  "outputDirectory": "dist",
+  "framework": "bun",
+  "env": {
+    "DATABASE_URL": "@database_url"
+  },
+  "crons": []
+}
