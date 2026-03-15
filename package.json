@@ -4,7 +4,7 @@
   "version": "1.0.50",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsup src/index.ts --format esm --out-dir dist",
+    "build": "npx prisma generate && npx prisma migrate deploy && tsup src/index.ts --format esm --out-dir dist",
     "start": "NODE_ENV=production node dist/index.js",
     "create-admin": "node scripts/create-admin.ts",
     "create-user": "node scripts/create-user.ts"
