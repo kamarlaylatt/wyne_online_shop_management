@@ -2,8 +2,5 @@
   "buildCommand": "bunx prisma migrate deploy && bun run build",
   "outputDirectory": "dist",
   "framework": "elysia",
-  "env": {
-    "DATABASE_URL": "@DATABASE_URL"
-  },
   "crons": []
 }
