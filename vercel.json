@@ -1,6 +1,5 @@
 {
   "buildCommand": "bunx prisma generate && bunx prisma migrate deploy && bun run build",
   "outputDirectory": "dist",
-  "framework": "elysia",
   "crons": []
 }
