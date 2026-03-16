@@ -5,6 +5,7 @@ import { customerController } from "../modules/customers";
 import { purchaseItemController } from "../modules/purchase-items";
 import { orderController } from "../modules/orders";
 import { orderItemController } from "../modules/order-items";
+import { dashboardController } from "../modules/dashboard";
 
 const betterAuth = new Elysia({ name: 'better-auth' })
     .mount(adminAuth.handler)
@@ -30,4 +31,5 @@ export const adminRoutes = new Elysia()
     .use(customerController)
     .use(purchaseItemController)
     .use(orderController)
-    .use(orderItemController);
+    .use(orderItemController)
+    .use(dashboardController);

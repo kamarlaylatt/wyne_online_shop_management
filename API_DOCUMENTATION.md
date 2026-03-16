@@ -12,6 +12,7 @@
   - [User Auth](#user-auth)
 - [Admin Endpoints](#admin-endpoints)
   - [Admin Detail](#admin-detail)
+  - [Dashboard](#dashboard)
   - [Suppliers](#suppliers)
   - [Customers](#customers)
   - [Purchase Items](#purchase-items)
@@ -165,6 +166,37 @@ GET /api/admin/detail
   "email": "admin@example.com",
   "createdAt": "2026-03-14T08:00:00.000Z",
   "updatedAt": "2026-03-14T08:00:00.000Z"
+}
+```
+
+---
+
+### Dashboard
+
+**Base Path**: `/api/admin/dashboard`
+
+#### Get Dashboard Stats
+
+```
+GET /api/admin/dashboard
+```
+
+**Description**: Returns high-level statistics for the admin dashboard, including totals for orders, paid orders, purchase items, and customers.
+
+**Response** `200 OK`
+```json
+{
+  "total_orders": 42,
+  "total_paid_orders": 28,
+  "total_purchase_items": 156,
+  "total_customers": 15
+}
+```
+
+**Error** `401 Unauthorized`
+```json
+{
+  "message": "Unauthorized"
 }
 ```
 

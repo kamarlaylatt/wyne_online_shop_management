@@ -947,6 +947,41 @@
             }
           ],
           "description": "CRUD endpoints for order items. Always filter by orderId when listing."
+        },
+        {
+          "name": "Dashboard",
+          "item": [
+            {
+              "name": "Get Dashboard Stats",
+              "request": {
+                "method": "GET",
+                "header": [
+                  { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/admin/dashboard",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "admin", "dashboard"]
+                },
+                "description": "Get dashboard statistics including total orders, paid orders, purchase items, and customers. Requires admin authentication."
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "body": "{\n  \"total_orders\": 42,\n  \"total_paid_orders\": 28,\n  \"total_purchase_items\": 156,\n  \"total_customers\": 15\n}"
+                },
+                {
+                  "name": "Unauthorized",
+                  "status": "Unauthorized",
+                  "code": 401,
+                  "body": "{\n  \"message\": \"Unauthorized\"\n}"
+                }
+              ]
+            }
+          ],
+          "description": "Dashboard analytics endpoints. Provides high-level statistics for admin overview."
         }
       ],
       "description": "Admin-specific routes. Admins have their own independent auth system with separate session storage."
