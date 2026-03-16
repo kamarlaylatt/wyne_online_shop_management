@@ -20,15 +20,17 @@ export abstract class OrderService {
         const skip = (page - 1) * limit
 
         const where: any = {}
-        if (filters.id) where.id = filters.id
-        if (filters.customerId) where.customerId = filters.customerId
+        if (filters.id?.trim()) where.id = filters.id.trim()
+        if (filters.customerId?.trim()) where.customerId = filters.customerId.trim()
         if (filters.status) where.status = filters.status
         if (filters.paymentStatus) where.paymentStatus = filters.paymentStatus
 
-        if (filters.fromCreatedAt || filters.toCreatedAt) {
+        const from = filters.fromCreatedAt?.trim()
+        const to = filters.toCreatedAt?.trim()
+        if (from || to) {
             where.createdAt = {}
-            if (filters.fromCreatedAt) where.createdAt.gte = new Date(filters.fromCreatedAt)
-            if (filters.toCreatedAt) where.createdAt.lte = new Date(filters.toCreatedAt)
+            if (from) where.createdAt.gte = new Date(from)
+            if (to) where.createdAt.lte = new Date(to)
         }
 
         const [data, total] = await Promise.all([
