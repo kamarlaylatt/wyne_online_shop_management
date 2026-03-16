@@ -653,6 +653,7 @@ GET /api/admin/orders?page=1&limit=20
 | `limit` | integer | 20 | Items per page (1-100) |
 | `id` | string | — | Filter by exact order ID |
 | `customerId` | string | — | Filter by exact customer ID |
+| `purchaseItemId` | string | — | Filter orders that contain this purchase item |
 | `status` | string | — | Filter by order status: `PENDING` \| `PROCESSING` \| `COMPLETED` \| `CANCELLED` |
 | `paymentStatus` | string | — | Filter by payment status: `UNPAID` \| `PAID` \| `REFUNDED` |
 | `fromCreatedAt` | string (ISO 8601) | — | Return orders created on or after this datetime |

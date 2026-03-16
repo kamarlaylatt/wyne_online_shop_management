@@ -9,6 +9,7 @@ interface OrderFilters {
     limit?: number
     id?: string
     customerId?: string
+    purchaseItemId?: string
     status?: OrderStatus
     paymentStatus?: PaymentStatus
     fromCreatedAt?: string
@@ -22,6 +23,7 @@ export abstract class OrderService {
         const where: any = {}
         if (filters.id?.trim()) where.id = filters.id.trim()
         if (filters.customerId?.trim()) where.customerId = filters.customerId.trim()
+        if (filters.purchaseItemId?.trim()) where.orderItems = { some: { purchaseItemId: filters.purchaseItemId.trim() } }
         if (filters.status) where.status = filters.status
         if (filters.paymentStatus) where.paymentStatus = filters.paymentStatus
 

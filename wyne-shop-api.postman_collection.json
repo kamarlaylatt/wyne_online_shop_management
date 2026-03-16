@@ -716,13 +716,14 @@
                     { "key": "limit", "value": "20", "description": "Items per page, max 100 (default: 20)", "disabled": true },
                     { "key": "id", "value": "", "description": "Filter by order ID", "disabled": true },
                     { "key": "customerId", "value": "", "description": "Filter by customer ID", "disabled": true },
+                    { "key": "purchaseItemId", "value": "", "description": "Filter orders containing this purchase item ID", "disabled": true },
                     { "key": "status", "value": "", "description": "Filter by order status: PENDING | PROCESSING | COMPLETED | CANCELLED", "disabled": true },
                     { "key": "paymentStatus", "value": "", "description": "Filter by payment status: UNPAID | PAID | REFUNDED", "disabled": true },
                     { "key": "fromCreatedAt", "value": "", "description": "Filter orders created from this date (ISO 8601, e.g. 2026-01-01T00:00:00.000Z)", "disabled": true },
                     { "key": "toCreatedAt", "value": "", "description": "Filter orders created until this date (ISO 8601, e.g. 2026-12-31T23:59:59.999Z)", "disabled": true }
                   ]
                 },
-                "description": "List all orders with pagination and optional filters. Includes customer info and order items.\n\n**Filters:**\n- `id` — exact match on order ID\n- `customerId` — exact match on customer ID\n- `status` — one of `PENDING`, `PROCESSING`, `COMPLETED`, `CANCELLED`\n- `paymentStatus` — one of `UNPAID`, `PAID`, `REFUNDED`\n- `fromCreatedAt` — orders created on or after this datetime (ISO 8601)\n- `toCreatedAt` — orders created on or before this datetime (ISO 8601)"
+                "description": "List all orders with pagination and optional filters. Includes customer info and order items.\n\n**Filters:**\n- `id` — exact match on order ID\n- `customerId` — exact match on customer ID\n- `purchaseItemId` — orders that contain this purchase item\n- `status` — one of `PENDING`, `PROCESSING`, `COMPLETED`, `CANCELLED`\n- `paymentStatus` — one of `UNPAID`, `PAID`, `REFUNDED`\n- `fromCreatedAt` — orders created on or after this datetime (ISO 8601)\n- `toCreatedAt` — orders created on or before this datetime (ISO 8601)"
               },
               "response": [
                 {

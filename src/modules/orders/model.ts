@@ -47,6 +47,7 @@ export const OrderFilterQuery = t.Object({
     limit: t.Optional(t.Numeric({ minimum: 1, maximum: 100, default: 20 })),
     id: t.Optional(t.String()),
     customerId: t.Optional(t.String()),
+    purchaseItemId: t.Optional(t.String()),
     status: t.Optional(t.Union([OrderStatusEnum, t.Literal("")])),
     paymentStatus: t.Optional(t.Union([PaymentStatusEnum, t.Literal("")])),
     fromCreatedAt: t.Optional(t.String()),
