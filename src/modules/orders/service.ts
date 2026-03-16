@@ -148,7 +148,7 @@ export abstract class OrderService {
     }
 
     static async preload() {
-        const [purchaseItems, customers] = await Promise.all([
+        const [purchaseItems, customers, orderItemSums] = await Promise.all([
             prisma.purchaseItem.findMany({
                 select: {
                     id: true,
@@ -165,7 +165,13 @@ export abstract class OrderService {
                 select: { id: true, name: true, phone: true, address: true },
                 orderBy: { name: "asc" },
             }),
+            prisma.orderItem.groupBy({
+                by: ["purchaseItemId"],
+                _sum: { quantity: true },
+            }),
         ])
-        return { purchaseItems, customers }
+        const sumMap = new Map(orderItemSums.map(s => [s.purchaseItemId, s._sum.quantity ?? 0]))
+        const enriched = purchaseItems.map(item => ({ ...item, orderItemsQuantity: sumMap.get(item.id) ?? 0 }))
+        return { purchaseItems: enriched, customers }
     }
 }

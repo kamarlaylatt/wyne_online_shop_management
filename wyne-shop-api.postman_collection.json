@@ -753,7 +753,7 @@
                   "name": "Success",
                   "status": "OK",
                   "code": 200,
-                  "body": "{\n  \"purchaseItems\": [\n    {\n      \"id\": \"clxxx1\",\n      \"name\": \"Item A\",\n      \"totalPrice\": \"500000\",\n      \"quantity\": 10,\n      \"sellPerPrice\": \"50000\",\n      \"supplier\": { \"id\": \"clxxx0\", \"name\": \"Supplier X\" },\n      \"_count\": { \"orderItems\": 3 }\n    }\n  ],\n  \"customers\": [\n    {\n      \"id\": \"clxxx2\",\n      \"name\": \"John Doe\",\n      \"phone\": \"081234567890\",\n      \"address\": \"Jakarta\"\n    }\n  ]\n}"
+                  "body": "{\n  \"purchaseItems\": [\n    {\n      \"id\": \"clxxx1\",\n      \"name\": \"Item A\",\n      \"totalPrice\": \"500000\",\n      \"quantity\": 10,\n      \"sellPerPrice\": \"50000\",\n      \"supplier\": { \"id\": \"clxxx0\", \"name\": \"Supplier X\" },\n      \"_count\": { \"orderItems\": 3 },\n      \"orderItemsQuantity\": 25\n    }\n  ],\n  \"customers\": [\n    {\n      \"id\": \"clxxx2\",\n      \"name\": \"John Doe\",\n      \"phone\": \"081234567890\",\n      \"address\": \"Jakarta\"\n    }\n  ]\n}"
                 }
               ]
             },
