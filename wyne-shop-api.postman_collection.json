@@ -132,7 +132,7 @@
                 ],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"password123\"\n}",
+                  "raw": "{\n  \"email\": \"noelwyne2020@gmail.com\",\n  \"password\": \"password\"\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -708,18 +708,28 @@
                   { "key": "Authorization", "value": "Bearer {{adminToken}}" }
                 ],
                 "url": {
-                  "raw": "{{baseUrl}}/api/admin/orders",
+                  "raw": "{{baseUrl}}/api/admin/orders?page=1&limit=20",
                   "host": ["{{baseUrl}}"],
-                  "path": ["api", "admin", "orders"]
+                  "path": ["api", "admin", "orders"],
+                  "query": [
+                    { "key": "page", "value": "1", "description": "Page number (default: 1)", "disabled": true },
+                    { "key": "limit", "value": "20", "description": "Items per page, max 100 (default: 20)", "disabled": true },
+                    { "key": "id", "value": "", "description": "Filter by order ID", "disabled": true },
+                    { "key": "customerId", "value": "", "description": "Filter by customer ID", "disabled": true },
+                    { "key": "status", "value": "", "description": "Filter by order status: PENDING | PROCESSING | COMPLETED | CANCELLED", "disabled": true },
+                    { "key": "paymentStatus", "value": "", "description": "Filter by payment status: UNPAID | PAID | REFUNDED", "disabled": true },
+                    { "key": "fromCreatedAt", "value": "", "description": "Filter orders created from this date (ISO 8601, e.g. 2026-01-01T00:00:00.000Z)", "disabled": true },
+                    { "key": "toCreatedAt", "value": "", "description": "Filter orders created until this date (ISO 8601, e.g. 2026-12-31T23:59:59.999Z)", "disabled": true }
+                  ]
                 },
-                "description": "List all orders. Includes customer info and order items."
+                "description": "List all orders with pagination and optional filters. Includes customer info and order items.\n\n**Filters:**\n- `id` — exact match on order ID\n- `customerId` — exact match on customer ID\n- `status` — one of `PENDING`, `PROCESSING`, `COMPLETED`, `CANCELLED`\n- `paymentStatus` — one of `UNPAID`, `PAID`, `REFUNDED`\n- `fromCreatedAt` — orders created on or after this datetime (ISO 8601)\n- `toCreatedAt` — orders created on or before this datetime (ISO 8601)"
               },
               "response": [
                 {
                   "name": "Success",
                   "status": "OK",
                   "code": 200,
-                  "body": "[\n  {\n    \"id\": \"clxxx4\",\n    \"customerId\": \"clxxx2\",\n    \"customer\": { \"id\": \"clxxx2\", \"name\": \"John Doe\" },\n    \"totalPrice\": \"150000\",\n    \"status\": \"PENDING\",\n    \"paymentStatus\": \"UNPAID\",\n    \"createdAt\": \"2026-01-01T00:00:00.000Z\",\n    \"updatedAt\": \"2026-01-01T00:00:00.000Z\",\n    \"orderItems\": []\n  }\n]"
+                  "body": "{\n  \"data\": [\n    {\n      \"id\": \"clxxx4\",\n      \"customerId\": \"clxxx2\",\n      \"customer\": { \"id\": \"clxxx2\", \"name\": \"John Doe\" },\n      \"totalPrice\": \"150000\",\n      \"status\": \"PENDING\",\n      \"paymentStatus\": \"UNPAID\",\n      \"createdAt\": \"2026-01-01T00:00:00.000Z\",\n      \"updatedAt\": \"2026-01-01T00:00:00.000Z\",\n      \"orderItems\": []\n    }\n  ],\n  \"total\": 1,\n  \"page\": 1,\n  \"limit\": 20,\n  \"totalPages\": 1\n}"
                 }
               ]
             },

@@ -4,11 +4,36 @@ import { OrderStatus, PaymentStatus } from "../../../generated/prisma/client"
 type OrderItemInput = { purchaseItemId: string; quantity: number; unitPrice: number }
 type CustomerInput = { name: string; phone?: string; address?: string }
 
+interface OrderFilters {
+    page?: number
+    limit?: number
+    id?: string
+    customerId?: string
+    status?: OrderStatus
+    paymentStatus?: PaymentStatus
+    fromCreatedAt?: string
+    toCreatedAt?: string
+}
+
 export abstract class OrderService {
-    static async getAll(page = 1, limit = 20) {
+    static async getAll(page = 1, limit = 20, filters: OrderFilters = {}) {
         const skip = (page - 1) * limit
+
+        const where: any = {}
+        if (filters.id) where.id = filters.id
+        if (filters.customerId) where.customerId = filters.customerId
+        if (filters.status) where.status = filters.status
+        if (filters.paymentStatus) where.paymentStatus = filters.paymentStatus
+
+        if (filters.fromCreatedAt || filters.toCreatedAt) {
+            where.createdAt = {}
+            if (filters.fromCreatedAt) where.createdAt.gte = new Date(filters.fromCreatedAt)
+            if (filters.toCreatedAt) where.createdAt.lte = new Date(filters.toCreatedAt)
+        }
+
         const [data, total] = await Promise.all([
             prisma.order.findMany({
+                where,
                 include: {
                     customer: { select: { id: true, name: true } },
                     orderItems: { include: { purchaseItem: { select: { id: true, name: true } } } }
@@ -17,7 +42,7 @@ export abstract class OrderService {
                 skip,
                 take: limit,
             }),
-            prisma.order.count(),
+            prisma.order.count({ where }),
         ])
         return { data, total, page, limit, totalPages: Math.ceil(total / limit) }
     }

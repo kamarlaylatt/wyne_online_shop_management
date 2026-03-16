@@ -42,7 +42,15 @@ export const OrderUpdateBody = t.Object({
 
 export const IdParams = t.Object({ id: t.String() })
 
-export const PaginationQuery = t.Object({
+export const OrderFilterQuery = t.Object({
     page: t.Optional(t.Numeric({ minimum: 1, default: 1 })),
     limit: t.Optional(t.Numeric({ minimum: 1, maximum: 100, default: 20 })),
+    id: t.Optional(t.String()),
+    customerId: t.Optional(t.String()),
+    status: t.Optional(OrderStatusEnum),
+    paymentStatus: t.Optional(PaymentStatusEnum),
+    fromCreatedAt: t.Optional(t.String()),
+    toCreatedAt: t.Optional(t.String()),
 })
+
+export const PaginationQuery = OrderFilterQuery

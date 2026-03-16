@@ -4,7 +4,7 @@ import { OrderCreateBody, OrderUpdateBody, IdParams, PaginationQuery } from "./m
 
 export const orderController = new Elysia({ prefix: "/api/admin/orders" })
     // @ts-ignore - auth macro registered in parent route
-    .get("/", ({ query }) => OrderService.getAll(query.page, query.limit), { auth: true, query: PaginationQuery })
+    .get("/", ({ query }) => OrderService.getAll(query.page, query.limit, query as any), { auth: true, query: PaginationQuery })
     // @ts-ignore
     .get("/preload", () => OrderService.preload(), { auth: true })
     // @ts-ignore
