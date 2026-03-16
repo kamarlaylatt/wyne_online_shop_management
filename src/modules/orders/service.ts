@@ -163,7 +163,7 @@ export abstract class OrderService {
             }),
             prisma.customer.findMany({
                 select: { id: true, name: true, phone: true, address: true },
-                orderBy: { createdAt: "desc" },
+                orderBy: { name: "asc" },
             }),
         ])
         return { purchaseItems, customers }
