@@ -1,6 +1,6 @@
 import { Elysia } from "elysia"
-import { PurchaseItemService } from "./service"
-import { PurchaseItemCreateBody, PurchaseItemUpdateBody, IdParams, PaginationQuery } from "./model"
+import { PurchaseItemService } from "./service.js"
+import { PurchaseItemCreateBody, PurchaseItemUpdateBody, IdParams, PaginationQuery } from "./model.js"
 
 export const purchaseItemController = new Elysia({ prefix: "/api/admin/purchase-items" })
     // @ts-ignore - auth macro registered in parent route

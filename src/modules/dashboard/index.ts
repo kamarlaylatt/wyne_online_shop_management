@@ -1,5 +1,5 @@
 import { Elysia } from "elysia"
-import { DashboardService } from "./service"
+import { DashboardService } from "./service.js"
 
 export const dashboardController = new Elysia({ prefix: "/api/admin/dashboard" })
     // @ts-ignore - auth macro registered in parent route

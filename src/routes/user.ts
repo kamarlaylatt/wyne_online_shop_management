@@ -1,5 +1,5 @@
 import { Elysia, Context } from "elysia";
-import { auth as userAuth } from "../../lib/auth/user";
+import { auth as userAuth } from "../../lib/auth/user.js";
 
 const betterAuth = new Elysia({ name: 'better-auth-user' })
     .mount(userAuth.handler)

@@ -1,6 +1,6 @@
 import { Elysia } from "elysia"
-import { CustomerService } from "./service"
-import { CustomerCreateBody, CustomerUpdateBody, IdParams } from "./model"
+import { CustomerService } from "./service.js"
+import { CustomerCreateBody, CustomerUpdateBody, IdParams } from "./model.js"
 
 export const customerController = new Elysia({ prefix: "/api/admin/customers" })
     // @ts-ignore - auth macro registered in parent route

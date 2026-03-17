@@ -1,4 +1,4 @@
-import { prisma } from "../../../lib/prisma"
+import { prisma } from "../../../lib/prisma.js"
 
 export abstract class OrderItemService {
     static async getByOrderId(orderId: string) {

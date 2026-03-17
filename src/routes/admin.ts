@@ -1,11 +1,11 @@
 import { Elysia } from "elysia";
-import { auth as adminAuth } from "../../lib/auth/admin";
-import { supplierController } from "../modules/suppliers";
-import { customerController } from "../modules/customers";
-import { purchaseItemController } from "../modules/purchase-items";
-import { orderController } from "../modules/orders";
-import { orderItemController } from "../modules/order-items";
-import { dashboardController } from "../modules/dashboard";
+import { auth as adminAuth } from "../../lib/auth/admin.js";
+import { supplierController } from "../modules/suppliers/index.js";
+import { customerController } from "../modules/customers/index.js";
+import { purchaseItemController } from "../modules/purchase-items/index.js";
+import { orderController } from "../modules/orders/index.js";
+import { orderItemController } from "../modules/order-items/index.js";
+import { dashboardController } from "../modules/dashboard/index.js";
 
 const betterAuth = new Elysia({ name: 'better-auth' })
     .mount(adminAuth.handler)
