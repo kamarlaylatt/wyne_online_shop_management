@@ -1,5 +1,5 @@
 import { prisma } from "../../../lib/prisma.js"
-import { OrderStatus, PaymentStatus } from "../../../generated/prisma/client/index.js"
+import { OrderStatus, PaymentStatus } from "../../../generated/prisma/enums.js"
 
 type OrderItemInput = { purchaseItemId: string; quantity: number; unitPrice: number }
 type CustomerInput = { name: string; phone?: string; address?: string }
