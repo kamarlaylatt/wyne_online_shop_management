@@ -2,6 +2,7 @@
   "name": "wyne_online_shop_management",
   "version": "1.0.50",
   "scripts": {
+    "postinstall": "prisma generate",
     "dev": "bun run --watch src/index.ts",
     "build": "bunx prisma generate && bunx prisma migrate deploy && bun build src/index.ts --outdir dist --target bun",
     "start": "bun dist/index.js",
